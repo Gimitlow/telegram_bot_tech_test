@@ -1,9 +1,5 @@
 import logging
 import os
-import pandas
-
-#импортируем метод для работы с гугл таблицами
-from googleapiclient.discovery import build
 
 #импортируем роутер и фильтр хендлеров из основной библиотеки 
 from aiogram import Router, F, types
@@ -11,17 +7,14 @@ from aiogram import Router, F, types
 #иморт кнопок
 from bot.markups.sheet_markup import GoogleSheetButtons
 
-#библиотека для работы с виртуальным окружением
-from dotenv import load_dotenv
-
-GOOGLE_SHEET_KEY = os.getenv('GOOGLE_SHEET_KEY')
-SHEET_ID = os.getenv('SHEET_ID')
-
 #создание роутера(маршрута)
 router = Router()
 
 #подключение логгера
 logging = logging.getLogger('app:bot:handlers:google_sheet')
+
+#импорт интеграции 
+from bot.integrations.googlesheets import GoogleSheetsIntegration
 
 class GoogleSheetsHandler:
 
@@ -34,27 +27,12 @@ class GoogleSheetsHandler:
         #удаляем предидущее сообщение
         await callback.message.delete()
         
-        #формируем ссылку на получение доступа к таблице
-        url = f'https://sheets.googleapis.com/v4/spreadsheets/{SHEET_ID}/values?key={GOOGLE_SHEET_KEY}'
-
-        #запрос к гугл таблицам
-        try:
-            service = build('sheets', 'v4', developerKey=GOOGLE_SHEET_KEY)
-            sheet = service.spreadsheets()
-            result = sheet.values().get(spreadsheetId=SHEET_ID, range='Лист1!A2').execute()
-            value = result.get('values', [])[0][0]
-        except Exception as e:
-            logging.info(f'Ошибка при обращении к гугл таблице. {e}')
-        
-        #проверяем результат выполнения
-        if value is not None:
-            text=f'Ячейка А2 в таблице равно - {value}'    
-        else:
-            text=f'Пусто! В ячейке А2 в таблице'       
+        #получаем результат работы с таблицей
+        result = await GoogleSheetsIntegration.get_A2()   
 
         #отвечаем с результатом
         await callback.message.answer(
-            text=text,
+            text=result,
             reply_markup=await GoogleSheetButtons.back_to_main_menu()
         )  
 

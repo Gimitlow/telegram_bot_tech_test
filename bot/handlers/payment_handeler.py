@@ -7,7 +7,7 @@ from aiogram import Router, F, types
 from bot.markups.payment_markup import PaymentButtons
 
 #импорт платежной системы
-from bot.payment.yomoney_payment import YooMoneyIntegration
+from bot.integrations.yomoney_payment import YooMoneyIntegration
 
 #создание роутера(маршрута)
 router = Router()
