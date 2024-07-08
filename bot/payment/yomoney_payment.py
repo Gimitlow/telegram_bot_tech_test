@@ -18,6 +18,7 @@ class YooMoneyIntegration:
     #получение ссылки на оплату сервиса
     async def get_order() -> None:
         
+        #получение уникального id операции 
         payment_id = uuid.uuid4()
 
         #формирование перевода
