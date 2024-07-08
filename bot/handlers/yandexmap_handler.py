@@ -2,11 +2,9 @@ import logging
 
 #импортируем роутер и фильтр хендлеров из основной библиотеки 
 from aiogram import Router, F, types
-#импорт фильтра по командам
-from aiogram.filters import Command
 
 #иморт кнопок
-from bot.markups.yandexmap_handler import YandexMapButtons
+from bot.markups.yandexmap_markup import YandexMapButtons
 
 #создание роутера(маршрута)
 router = Router()

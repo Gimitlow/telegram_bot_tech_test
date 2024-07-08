@@ -3,8 +3,7 @@ import logging
 import os
 
 #импорт роутеров
-from bot.handlers import main_handler
-from bot.handlers import yandexmap_handler
+from bot.handlers import main_handler, yandexmap_handler, payment_handeler
 
 #библиотека для работы с переменными среды 
 from dotenv import load_dotenv
@@ -49,7 +48,8 @@ async def start():
         #подключаем роутеры
         dispetcher.include_router(main_handler.router)
         dispetcher.include_router(yandexmap_handler.router)
-
+        dispetcher.include_router(payment_handeler.router)
+        
         #запускаем
         await dispetcher.start_polling(bot)
     except Exception as e:
