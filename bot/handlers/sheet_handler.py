@@ -21,10 +21,7 @@ class GoogleSheetsHandler:
     #получаем значение из гугл таблицы
     @router.callback_query(F.data == 'get_google_sheets')
     async def get_A2_from_table(callback: types.CallbackQuery) -> None:
-        #определяем переменную результата по умолчанию
-        value = None
-
-        #удаляем предидущее сообщение
+        #удаляем предыдущуе сообщение
         await callback.message.delete()
         
         #получаем результат работы с таблицей

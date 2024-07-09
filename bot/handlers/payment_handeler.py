@@ -20,7 +20,7 @@ class PaymentHandler:
     #вывод кнопок оплаты
     @router.callback_query(F.data == 'get_payment')
     async def get_payment(callback: types.CallbackQuery) -> None:
-        #удаляем предидущее сообщение
+        #удаляем предыдущуе сообщение
         await callback.message.delete()
         
         #формирование ссылки на оплату с Yomoney

@@ -20,7 +20,7 @@ class ImageHandler:
     @router.callback_query(F.data == 'get_image')
     async def get_image(callback: types.CallbackQuery) -> None:
 
-        #удаляем предидущее сообщение
+        #удаляем предыдущуе сообщение
         await callback.message.delete()
 
         #получаем путь текущей папки

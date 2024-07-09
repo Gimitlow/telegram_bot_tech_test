@@ -14,6 +14,10 @@ router = Router()
 #подключение логгера
 logging = logging.getLogger('app:bot:handlers:main_handler')
 
+
+#импорт контекст состояния
+from aiogram.fsm.context import FSMContext
+
 class MainMenuHandler:
     
     #функция старта
@@ -28,8 +32,11 @@ class MainMenuHandler:
     
     #обработка возврата в главное меню
     @router.callback_query(F.data == 'get_main_menu')
-    async def start(callback: types.CallbackQuery):
-        #удаляем предидущее сообщение
+    async def start(callback: types.CallbackQuery, state: FSMContext):
+        #этим методом очищаем состояния, чтобы наш бот не ожидал ответа от пользователя в случае возврата в основное меню
+        await state.clear()
+
+        #удаляем предыдущуе сообщение
         await callback.message.delete()
 
         #вывод меню        

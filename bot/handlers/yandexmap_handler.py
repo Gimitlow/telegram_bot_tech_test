@@ -17,6 +17,8 @@ class YandexMapHandler:
     #Получить ссылку на яндекс карты
     @router.callback_query(F.data == 'get_map_point')
     async def get_yandex_map_point(callback: types.CallbackQuery) -> None:
+        #удалить предыдущее сообщение
         await callback.message.delete()
 
+        #отправка координат
         await callback.message.answer(text='Ваша точка на карте по ссылке.', reply_markup=await YandexMapButtons.get_yandex_map_point())

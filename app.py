@@ -3,7 +3,7 @@ import logging
 import os
 
 #импорт роутеров
-from bot.handlers import main_handler, yandexmap_handler, payment_handeler, image_handler, sheet_handler
+from bot.handlers import main_handler, yandexmap_handler, payment_handeler, image_handler, sheet_handler, input_date_handler
 
 #библиотека для работы с переменными среды 
 from dotenv import load_dotenv
@@ -51,6 +51,7 @@ async def start():
         dispetcher.include_router(payment_handeler.router)
         dispetcher.include_router(image_handler.router)
         dispetcher.include_router(sheet_handler.router)
+        dispetcher.include_router(input_date_handler.router)
         
         #запускаем
         await dispetcher.start_polling(bot)
